@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Diskont>
+
+@{
+	ViewData["Title"] = "Lista Diskonta";
+}
+
+<div class="row">
+
+	<div class="col-mid-8 offset-md-2">
+
+		<table class=" table">
+
+			<thead>
+
+
+				<tr class="text-center">
+					<th>@Html.DisplayNameFor(model => model.LogoURL)</th>
+					<th>@Html.DisplayNameFor(model => model.Naziv)</th>
+					<th>@Html.DisplayNameFor(model => model.Adresa)</th>
+					<th>Akcije</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td class="align-middle">
+
+							<img class="rounded-circle" src="@item.LogoURL" alt="@item.Naziv" style="max-width:150px"></img>
+
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.Naziv)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.Adresa)
+						</td>
+						<td class="align-middle">
+							<a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square">Izmeni</i></a> |
+							<a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye">Detalji</i></a> |
+							<a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash">Izbrisi</i></a> |
+
+						</td>
+					</tr>
+
+
+
+				}
+			</tbody>
+
+
+		</table>
+
+	</div>
+
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Diskonti")

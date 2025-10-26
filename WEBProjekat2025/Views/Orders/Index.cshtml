@@ -1,0 +1,62 @@
+﻿@using WEBProjekat2025.Data.ViewModels
+@model ShoppingCartVM
+
+@{
+	ViewBag["Title"] = "Shopping cart summary";
+}
+
+<div class=" row">
+	<div class="col-md-8 offset-2">
+		<div class="text-center">
+			<h2>Your shopping cart summary</h2>
+		</div>
+
+		<table class=" table">
+			 <thead>	
+				 <th>Selektovana Kolicina</th>
+				 <th>Pice</th>
+				 <th>Cena</th>
+				 <th>Suma</th>
+				 <th></th>
+			 </thead>
+			 <tbody></tbody>
+			@foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+			{
+				<tr>
+					<td class=" align-middle">@item.Kolicina</td>
+					<td class =" align-middle">@item.Pice.Ime</td>
+					<td class=" align-middle">@item.Pice.Cena.ToString("c")</td>
+					<td class=" align-middle">@item.Kolicina*item.Pice.Cena.ToString("c"))</td>
+					<td class =" align-middle">
+						<a class=" text-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart" asp-route-id="@item.Pice.Id" >
+							<i class=" bi bi-cart-dash"></i>
+						</a>
+
+						<a class=" text-success" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Pice.Id" >
+							<i class=" bi bi-cart-plus"></i>
+						</a>
+
+					</td>
+				</tr>	
+			
+			}
+			<tfoot>
+				<tr>
+					<td colspan=" 2"></td>
+					<td><b>Suma</b></td>
+					<td>
+						@Model.ShoppingCartTotal.ToString("c");
+					</td>
+				</tr>
+			</tfoot>
+
+		</table>
+
+		<div class=" text-center">
+			<div class=" btn-group">
+				<a class=" btn btn-outline-success" asp-controller="Pice" asp-action="Index">Dodajte jos filmova</a>
+			</div>
+		</div>
+
+	</div>
+</div>

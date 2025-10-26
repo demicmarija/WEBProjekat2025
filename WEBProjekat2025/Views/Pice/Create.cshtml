@@ -1,0 +1,116 @@
+﻿@using WEBProjekat2025.Data.Enum
+@using WEBProjekat2025.Data.ViewModels
+@model NewPiceVM
+
+@{
+	ViewData["Title"] = "Uneti novo pice";
+}
+
+<div class="row">
+	<div class="col-md-8 offset-2">
+		<p>
+			<h4>Uneti novo pice</h4>
+		</p>
+
+		<div class="row">
+			<div class="col-md-8 offset-2">
+				<form asp-action="Create">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+					<div class="row">
+						<!-- Leva kolona -->
+						<div class="col-md-6">
+							<div class="form-group">
+								<label asp-for="Ime" class="control-label"></label>
+								<input asp-for="Ime" class="form-control" />
+								<span asp-validation-for="Ime" class="text-danger"></span>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="Cena" class="control-label"></label>
+								<input asp-for="Cena" type="number" class="form-control" />
+								<span asp-validation-for="Cena" class="text-danger"></span>
+							</div>
+
+							<!-- URL slike -->
+							<div class="form-group">
+								<label asp-for="SlikaURL" class="control-label"></label>
+								<input asp-for="SlikaURL" class="form-control" id="SlikaURL" />
+								<span asp-validation-for="SlikaURL" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Proizvedeno" class="control-label"></label>
+								<input asp-for="Proizvedeno" class="form-control" type="date" />
+								<span asp-validation-for="Proizvedeno" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="KategorijaPica" class="control-label"></label>
+								<select asp-for="KategorijaPica" class="form-control"
+										asp-items="Html.GetEnumSelectList<KategorijaPica>()"></select>
+								<span asp-validation-for="KategorijaPica" class="text-danger"></span>
+							</div>
+
+						</div>
+
+						<!-- Desna kolona -->
+						<div class="col-md-6">
+							<div class="form-group">
+								<label asp-for="DiskontId" class="control-label"></label>
+								<select asp-for="DiskontId" class="form-control" asp-items="ViewBag.Diskont"></select>
+								<span asp-validation-for="DiskontId" class="text-danger"></span>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="ProizvodjacId" class="control-label"></label>
+								<select asp-for="ProizvodjacId" class="form-control" asp-items="ViewBag.Proizvodjac"></select>
+								<span asp-validation-for="ProizvodjacId" class="text-danger"></span>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="AromeIds" class="control-label"></label>
+								<select asp-for="AromeIds" class="form-control" multiple asp-items="ViewBag.Aroma"></select>
+								<span asp-validation-for="AromeIds" class="text-danger"></span>
+							</div>
+						</div>
+
+						<!-- Opis -->
+						<div class="col-md-12">
+							<div class="form-group">
+								<label asp-for="Opis" class="control-label"></label>
+								<textarea asp-for="Opis" class="form-control"></textarea>
+								<span asp-validation-for="Opis" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Preview slike -->
+					<div class="text-center my-3">
+						<img id="SlikaPreview" src="" style="max-width:250px; height:auto; border-radius:5px; border:1px solid #ccc;" />
+					</div>
+
+					<!-- Dugmad -->
+					<div class="form-group">
+						<input type="submit" value="Create" class="btn btn-outline-success float-right" />
+						<a class="btn btn-outline-secondary" asp-action="Index">Prikazi sve</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		// Kada se stranica učita, odmah postavi preview ako već postoji link
+		$(document).ready(function () {
+			var output = document.getElementById('SlikaPreview');
+			output.src = $("#SlikaURL").val();
+		});
+
+		// Ažuriraj preview slike dok korisnik unosi URL
+		$("#SlikaURL").on("input", function () {
+			var output = document.getElementById('SlikaPreview');
+			output.src = $(this).val();
+		});
+	</script>
+}
