@@ -6,7 +6,8 @@ using WEBProjekat2025.Models;
 
 namespace WEBProjekat2025.NewFolder2
 {
-    public class appDbContext:DbContext{
+    public class appDbContext:DbContext
+    {
 
         public appDbContext(DbContextOptions<appDbContext> Opcije): base(Opcije)
         {
@@ -37,7 +38,7 @@ namespace WEBProjekat2025.NewFolder2
         //orders relate tables
 
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrdersItems { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 

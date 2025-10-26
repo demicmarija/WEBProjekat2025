@@ -6,7 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net.Security;
 using WEBProjekat2025.Data;
+using WEBProjekat2025.Data.Cart;
 using WEBProjekat2025.Data.Services;
+using WEBProjekat2025.Data.ViewModels;
 using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025
@@ -32,8 +34,15 @@ namespace WEBProjekat2025
             services.AddScoped<IProizvodjaciService,ProizvodjaciService>();
             services.AddScoped<IDiskontiService, DiskontiService> ();
             services.AddScoped<IPiceService, PiceService>();
+            services.AddScoped<IOrdersService, OrdersService>();
 
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+            services.AddSession();
+
+            services.AddControllersWithViews();
             services.AddScoped<IAromeService, AromeService>();
 
             // Dodavanje MVC servisa (za kontrolere i view-ove)
@@ -57,6 +66,7 @@ namespace WEBProjekat2025
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

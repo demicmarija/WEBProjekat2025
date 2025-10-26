@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection; // ✅ dodaj ovo
+using Microsoft.Extensions.DependencyInjection; 
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WEBProjekat2025.Data;
-using WEBProjekat2025.NewFolder2; // ✅ dodaj ovo zbog AppDbContext
+using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025
 {

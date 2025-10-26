@@ -28,3 +28,35 @@ body {
     background-color: #ffffff; /* bela pozadina */
     border-radius: 5px;
 }
+
+.dropdown-menu {
+    background-color: white !important;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 220px;
+}
+
+.dropdown-item {
+    color: #212529 !important; /* crni tekst umesto ljubièastog */
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+}
+
+    .dropdown-item i {
+        font-size: 1.2rem;
+        color: #212529;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #198754 !important; /* zelena na hover */
+    }
+
+.nav-link.dropdown-toggle {
+    color: #212529 !important;
+    font-weight: 500;
+}
+

@@ -13,7 +13,6 @@ namespace WEBProjekat2025.Models
 
         public int Kolicina { get; set; }
 
-
         public string ShoppingCartId { get; set; }
     }
 }

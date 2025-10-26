@@ -8,7 +8,7 @@ namespace WEBProjekat2025.Models
         [Key]
         public int Id { get; set; }
         public int Kolicina { get; set; }
-        public int Cena { get; set; }
+        public double Cena { get; set; }
 
         public int PiceId { get; set; }
         [ForeignKey("PiceId")]
