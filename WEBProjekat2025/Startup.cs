@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Net.Security;
 using WEBProjekat2025.Data;
 using WEBProjekat2025.Data.Cart;
 using WEBProjekat2025.Data.Services;
 using WEBProjekat2025.Data.ViewModels;
+using WEBProjekat2025.Models;
 using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025
@@ -36,7 +40,6 @@ namespace WEBProjekat2025
             services.AddScoped<IPiceService, PiceService>();
             services.AddScoped<IOrdersService, OrdersService>();
 
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
@@ -46,6 +49,17 @@ namespace WEBProjekat2025
             services.AddScoped<IAromeService, AromeService>();
 
             // Dodavanje MVC servisa (za kontrolere i view-ove)
+            services.AddControllersWithViews();
+
+            //Authentication and authorization
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<appDbContext>();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -80,6 +94,7 @@ namespace WEBProjekat2025
 
             // 🔹 Pokretanje metode za inicijalizaciju baze
             appDbInitializer.Seed(app);
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }

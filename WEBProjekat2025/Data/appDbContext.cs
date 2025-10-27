@@ -1,12 +1,13 @@
 ﻿
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
 using WEBProjekat2025.Models;
 
 namespace WEBProjekat2025.NewFolder2
 {
-    public class appDbContext:DbContext
+    public class appDbContext:IdentityDbContext<ApplicationUser>
     {
 
         public appDbContext(DbContextOptions<appDbContext> Opcije): base(Opcije)

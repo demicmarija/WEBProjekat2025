@@ -1,7 +1,9 @@
-﻿using WEBProjekat2025.Data.Enum;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using WEBProjekat2025.Data.Enum;
+using WEBProjekat2025.Data.Static;
 using WEBProjekat2025.Models;
 using WEBProjekat2025.NewFolder2;
-using System.Threading.Tasks;
 
 namespace WEBProjekat2025.Data
 {
@@ -34,10 +36,10 @@ namespace WEBProjekat2025.Data
 
                 }
 
-                    // 🔹 AROMA
-                 if (!context.Aroma.Any())
-                 {
-                   context.Aroma.AddRange(new List<Aroma>()
+                // 🔹 AROMA
+                if (!context.Aroma.Any())
+                {
+                    context.Aroma.AddRange(new List<Aroma>()
                     {
                     new Aroma() { SlikaURL = "https://www.kudaveceras.rs/images/news/1585312016-vanilla-1.jpg", Ime = "Vanila", Opis = "Topla, slatka i kremasta nota koja potiče iz hrastovih buradi." },
                     new Aroma() { SlikaURL = "https://joyfoodsunshine.com/wp-content/uploads/2022/06/homemade-caramel-recipe-5.jpg", Ime = "Karamela", Opis = "Blaga slatkoća koja podseća na šećer zagrejan do zlatne boje." },
@@ -50,14 +52,14 @@ namespace WEBProjekat2025.Data
                     new Aroma() { SlikaURL = "https://article.images.consumerreports.org/image/upload/t_article_tout/v1696263716/prod/content/dam/CRO-Images-2023/10October/Special-Projects/CR-SP-InlineHero-Heavy-Metals-in-Chocolate-Products-1023", Ime = "Čokolada", Opis = "Glatka i slatko-gorka nota koja se javlja u bogatijim destilatima." },
                     new Aroma() { SlikaURL = "https://www.aromatics.com/cdn/shop/articles/the-power-of-citrus-exploring-the-versatile-uses-of-citrus-essential-oils-394415.jpg?v=1721836156", Ime = "Citrus", Opis = "Sveža nota limuna i narandžine kore koja osvežava aromu pića." }
                      });
-                context.SaveChanges();
+                    context.SaveChanges();
 
                 }
-               
 
-                    // 🔹 PROIZVODJAC
-                    if (!context.Proizvodjac.Any())
-                 {
+
+                // 🔹 PROIZVODJAC
+                if (!context.Proizvodjac.Any())
+                {
                     context.Proizvodjac.AddRange(new List<Proizvodjac>()
                      {
                         new Proizvodjac() {  LogoURL = "https://www.hatchwise.com/wp-content/uploads/2022/04/pasted-image-0.png", Ime = "Jack Daniel's", Opis = "Američki proizvođač viskija iz Tennessee-a." },
@@ -85,7 +87,7 @@ namespace WEBProjekat2025.Data
                       new Pice() {  SlikaURL = "https://icdn.bottlenose.wine/images/full/651152.jpg?min-w=200&min-h=200&fit=crop", Ime = "Guinness Stout", Opis = "Tamno pivo bogatog ukusa.", Cena = 260, Proizvedeno = new DateTime(2025, 1, 15), KategorijaPica = KategorijaPica.Alkoholno, ProizvodjacId = 6, DiskontId = 6 },
                       new Pice() { SlikaURL = "https://online.idea.rs/images/products/306/306039040_1l.jpg?1725020108", Ime = "Red Bull Energy Drink", Opis = "Energetsko piće za osveženje i energiju.", Cena = 180, Proizvedeno = new DateTime(2025, 7, 1), KategorijaPica = KategorijaPica.Bezalkoholno, ProizvodjacId = 7, DiskontId = 7 }
                      });
-                context.SaveChanges();
+                    context.SaveChanges();
 
                 }
 
@@ -95,11 +97,11 @@ namespace WEBProjekat2025.Data
                     context.Arome_Pice.AddRange(new List<Arome_Pice>()
                      {
                      new Arome_Pice() { AromaId = 1, PiceId = 3 },
-                        new Arome_Pice() { AromaId = 2, PiceId = 5 }, 
+                        new Arome_Pice() { AromaId = 2, PiceId = 5 },
                         new Arome_Pice() { AromaId = 3, PiceId = 1 },
-                        new Arome_Pice() { AromaId = 4, PiceId = 2 }, 
+                        new Arome_Pice() { AromaId = 4, PiceId = 2 },
                         new Arome_Pice() { AromaId = 5, PiceId = 7 },
-                        new Arome_Pice() { AromaId = 6, PiceId = 4 }, 
+                        new Arome_Pice() { AromaId = 6, PiceId = 4 },
                         new Arome_Pice() { AromaId = 7, PiceId = 6 }
                      });
                     context.SaveChanges();
@@ -110,7 +112,57 @@ namespace WEBProjekat2025.Data
             }
         }
 
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
 
+                //Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                //Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                string adminUserEmail = "admin@WEBProjekat2025.com";
+
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new ApplicationUser()
+                    {
+                        FullName = "Admin User",
+                        UserName = "admin-user",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+
+
+                string appUserEmail = "user@WEBProjekat2025.com";
+
+                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                if (appUser == null)
+                {
+                    var newAppUser = new ApplicationUser()
+                    {
+                        FullName = "Application User",
+                        UserName = "app-user",
+                        Email = appUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAppUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                }
+            }
+        }
     }
 }
+
+
 

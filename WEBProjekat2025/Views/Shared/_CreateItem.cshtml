@@ -1,8 +1,10 @@
-﻿@model string;
+﻿@model string
 
-
-<div style="position: fixed; right:25px; bottom:70px; " class="text-white">
-	<a asp-controller ="@Model" asp-action="Create" class="btn btn-success">
-		<i class="bi bi-plus-circle">Dodaj novi/u</i>
-	</a>
-</div>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <div style="position: fixed; right:25px; bottom:70px;" class="text-white">
+        <a asp-controller="@Model" asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Dodaj novi/u
+        </a>
+    </div>
+}

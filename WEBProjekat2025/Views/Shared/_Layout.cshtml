@@ -24,30 +24,35 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Pice" asp-action="Index"><i class="bi bi-cup-straw" style="font-size: 1.1rem; margin-right: 6px; margin-top: -2px;"></i> Pice</a>
 						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="bi bi-gear"></i> Management
-							</a>
 
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<li>
-									<a class="dropdown-item" asp-controller="DiskontiPica" asp-action="Index">
-										<i class="bi bi-house"></i> DiskontiPica
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" asp-controller="Proizvodjaci" asp-action="Index">
-										<i class="bi bi-buildings"></i> Proizvodjaci
-									</a>
-								</li>
-								<li>
-									<a class="dropdown-item" asp-controller="Arome" asp-action="Index">
-										<i class="bi bi-flower2"></i> Arome
-									</a>
-								</li>
-							</ul>
 
-						</li>
+						@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+						{
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="bi bi-gear"></i> Management
+								</a>
+
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li>
+										<a class="dropdown-item" asp-controller="DiskontiPica" asp-action="Index">
+											<i class="bi bi-house"></i> DiskontiPica
+										</a>
+									</li>
+									<li>
+										<a class="dropdown-item" asp-controller="Proizvodjaci" asp-action="Index">
+											<i class="bi bi-buildings"></i> Proizvodjaci
+										</a>
+									</li>
+									<li>
+										<a class="dropdown-item" asp-controller="Arome" asp-action="Index">
+											<i class="bi bi-flower2"></i> Arome
+										</a>
+									</li>
+								</ul>
+
+							</li>
+						}
 					</ul>
 					<form class="d-flex" asp-controller="Pice" asp-action="Filter" style="padding-right: 25px;">
 						<input name="searchString" type="text" class="form-control" placeholder="Pretrazi pice..." aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -58,20 +63,9 @@
 						@await Component.InvokeAsync("ShoppingCartSummary")
 					</ul>
 
-					@*User profile section*@
-					<div class="dropdown">
-						<button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
-								aria-expanded="false">
-							<i class="bi bi-person-badge"></i> Hello User
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="profile-btn">
-							<li>
-								<a class="dropdown-item" asp-controller="Orders" asp-action="Index">
-									<i class="bi bi-list"></i> Orders
-								</a>
-							</li>
-						</ul>
-					</div>
+					<partial name="_Identity.cshtml" />
+
+					
 
 				</div>
 			</div>
