@@ -17,7 +17,7 @@ namespace WEBProjekat2025.Data.Services
         public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
         {
             var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Pice)
-            .Where(n => n.UserId == userId).ToListAsync();
+            .Include(n => n.User).ToListAsync();
 
             if (userRole != "Admin")
             {
