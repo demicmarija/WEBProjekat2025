@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WEBProjekat2025.NewFolder2;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using WEBProjekat2025.Data.Services;
 using WEBProjekat2025.Models;
-using System.Threading.Tasks;
+using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025.Controllers
 {
+    [Authorize]
     public class ProizvodjaciController : Controller
     {
        
@@ -16,6 +18,8 @@ namespace WEBProjekat2025.Controllers
         {
             _service = service;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
            
@@ -25,7 +29,7 @@ namespace WEBProjekat2025.Controllers
         }
 
         //Get: proizvodjaci/details/1
-
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id) 
         {
             var proizvodjacDetails = await _service.GetByIdAsync(id);
@@ -76,6 +80,8 @@ namespace WEBProjekat2025.Controllers
             return RedirectToAction(nameof(Index));
         }
         //Get: producers/delete/1
+
+      
         public async Task<IActionResult> Delete(int id)
         {
             var proizvodjacDetails = await _service.GetByIdAsync(id);

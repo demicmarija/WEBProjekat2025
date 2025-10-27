@@ -1,43 +1,55 @@
+/* ===================================
+   GLOBALNA PODEŠAVANJA
+=================================== */
+
 html {
-  font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #f8f9fa;
+    margin-bottom: 60px;
 }
+
+/* Fokus stil */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* ===================================
+   OPŠTI STILOVI
+=================================== */
 
 .card img {
     width: 100%;
     height: 250px;
     object-fit: contain;
-    background-color: #ffffff; /* bela pozadina */
+    background-color: #ffffff;
     border-radius: 5px;
 }
 
+/* Dropdown stil */
 .dropdown-menu {
-    background-color: white !important;
+    background-color: #fff !important;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     min-width: 220px;
 }
 
 .dropdown-item {
-    color: #212529 !important; /* crni tekst umesto ljubièastog */
+    color: #212529 !important;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -52,7 +64,7 @@ body {
 
     .dropdown-item:hover {
         background-color: #f8f9fa;
-        color: #198754 !important; /* zelena na hover */
+        color: #198754 !important;
     }
 
 .nav-link.dropdown-toggle {
@@ -60,3 +72,285 @@ body {
     font-weight: 500;
 }
 
+/* Dugmad */
+.btn-outline-info,
+.btn-outline-secondary,
+.btn-success {
+    border-radius: 25px;
+    transition: all 0.2s ease;
+}
+
+    .btn-outline-info:hover {
+        background-color: #0dcaf0;
+        color: #fff;
+    }
+
+.btn-outline-primary:hover {
+    background-color: #0dcaf0;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #198754;
+    transform: scale(1.03);
+}
+
+/* ===================================
+   STRANICA: PIÆA (PRODUCTS)
+=================================== */
+
+.product-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card .card-header {
+        background-color: #0dcaf0;
+        font-size: 1.1rem;
+        padding: 0.8rem;
+    }
+
+    .product-card .product-image {
+        width: 100%;
+        height: 230px;
+        object-fit: contain;
+        background-color: white;
+        padding: 10px;
+    }
+
+    .product-card .card-body {
+        padding: 1rem;
+    }
+
+    .product-card .card-footer {
+        background-color: #f1f1f1;
+        border-top: none;
+        padding: 0.8rem 1rem 1.2rem;
+    }
+
+/* ===================================
+   STRANICA: AROME
+=================================== */
+
+.aroma-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .aroma-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .aroma-card .card-header {
+        background-color: #0dcaf0;
+        font-size: 1.1rem;
+    }
+
+.aroma-image {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.aroma-details {
+    max-width: 600px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.aroma-details-img {
+    max-width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #0dcaf0;
+    background-color: #fff;
+}
+
+/* ===================================
+   STRANICA: DISKONTI
+=================================== */
+
+.diskont-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .diskont-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .diskont-card .card-header {
+        background-color: #0dcaf0;
+        font-size: 1.1rem;
+    }
+
+.diskont-logo {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.diskont-details {
+    max-width: 600px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.diskont-details-logo {
+    max-width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 4px solid #0dcaf0;
+    background-color: #fff;
+}
+
+/* ===================================
+   STRANICA: PROIZVOÐAÈI
+=================================== */
+
+.proizvodjac-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .proizvodjac-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .proizvodjac-card .card-header {
+        background-color: #0dcaf0;
+        font-size: 1.1rem;
+    }
+
+.proizvodjac-logo {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.proizvodjac-details {
+    max-width: 600px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+.proizvodjac-details-logo {
+    max-width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 4px solid #0dcaf0;
+    background-color: #fff;
+}
+
+/* ===================================
+   STRANICA: PORUDŽBINE
+=================================== */
+
+.order-card {
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+}
+
+    .order-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+.order-item {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+    .order-item:hover {
+        background-color: #e8f6f9;
+    }
+
+.order-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+/* ===================================
+   HOME PAGE
+=================================== */
+
+.hero-section {
+    height: 65vh; /* smanjena visina */
+    background: url(background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') center center/cover no-repeat; color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.hero-content {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    padding: 35px 40px;
+    max-width: 650px;
+}
+
+    .hero-content h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+
+.home-icon {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+
+
+}
+
+.card {
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }

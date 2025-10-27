@@ -1,77 +1,61 @@
 ﻿@model Pice
 
 @{
-    ViewData["Title"] = "Detalji o picu";
+    ViewData["Title"] = "Detalji o piću";
 }
 
-<div class="row">
-  
-        <div class="col-md-8  offset-2">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div class="card-header text-white bg-info">
-                            <p class="card-text">
-                                <h5 class="card-title">
-                                    @Model.Ime
-                     
-                                </h5>
-                            </p>
+<div class="container mt-5">
+    <div class="card product-details shadow-lg border-0 rounded-4">
+        <div class="card-header text-center text-white bg-info rounded-top-4">
+            <h3 class="fw-bold mb-0">@Model.Ime</h3>
+        </div>
+
+        <div class="card-body text-center">
+            <img src="@Model.SlikaURL" alt="@Model.Ime" class="product-details-img mb-3" />
+
+            <p class="lead text-muted">@Model.Opis</p>
+
+            <div class="text-start mx-auto" style="max-width: 500px;">
+                <p>
+                    <b>Diskont:</b>
+                    <a asp-controller="Diskonti" asp-action="Details" asp-route-id="@Model.DiskontId" class="link-info">
+                        @Model.Diskont.Naziv
+                    </a>
+                </p>
+                <p><b>Kategorija:</b> @Model.KategorijaPica</p>
+                <p><b>Proizvedeno:</b> @Model.Proizvedeno.ToString("dd MMM yyyy")</p>
+                <p><b>Cena:</b> <span class="text-success fw-bold">@Model.Cena.ToString("N0") RSD</span></p>
+            </div>
+
+            <hr class="my-4" />
+
+            <h5 class="fw-bold mb-3">Arome</h5>
+            <div class="row justify-content-center">
+                @foreach (var aroma in Model.Arome_Pice)
+                {
+                    <div class="col-md-3 col-sm-4 col-6 mb-4">
+                        <div class="aroma-card p-2 shadow-sm rounded-4">
+                            <img src="@aroma.Aroma.SlikaURL"
+                                 alt="@aroma.Aroma.Ime"
+                                 class="img-fluid rounded-circle mb-2 aroma-img" />
+                            <p class="fw-semibold">@aroma.Aroma.Ime</p>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                    <img src="@Model.SlikaURL" width="100%" alt="@Model.Ime">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                        <p class="card-text">@Model.Opis</p>
-                        <p class="card-text"><b>Diskont: </b></p>
-                        <a asp-controller="Diskonti" asp-action="Details" asp-route-id="@Model.DiskontId">
-                            @Model.Diskont.Naziv
-                        </a>
-                        <p class="card-text"><b>Kategorija: </b>@Model.KategorijaPica</p>
-                        <p class="card-text"><b>Proizvedeno: </b>@Model.Proizvedeno.ToString("dd MMM yy")</p>
-                        <p class="card-text">
-                            <b>Arome:</b>
-                            <hr></hr>
-                            <div class="row">
-                                @foreach (var aroma in Model.Arome_Pice)
-                                {
-
-                                    <div class="column text-center">
-                                        <img class=" border-info rounded-circle" src="@aroma.Aroma.SlikaURL" style="max-width : 150px" />
-                                        <br></br>
-                                        <a asp-controller="Aroma" asp-action="Details" asp-route-id="@aroma.AromaId">@aroma.Aroma.Ime</a>
-                                    </div>
-
-                                }
-                            </div>
-                        </p>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card-footer ">
-                            <p class="card-text">
-                                <a class="btn btn-outline-primary float-right" asp-action="Index">
-                                   Nazad na listu
-                                </a>
-                                <a class="btn btn-success text-white"
-                                   asp-controller="Orders"
-                                   asp-action="AddItemToShoppingCart"
-                                   asp-route-id="@Model.Id">
-                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Cena.ToString("c"))
-                                </a>
-                            </p>
-
-                        
-
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
-    
-</div>
 
-@*@await Html.PartialAsync("_Createitem", "Pice")*@
+        <div class="card-footer bg-light text-center border-0 pb-3">
+            <a class="btn btn-outline-primary me-2" asp-action="Index">
+                <i class="bi bi-arrow-left"></i> Nazad na listu
+            </a>
+            <a class="btn btn-success text-white"
+               asp-controller="Orders"
+               asp-action="AddItemToShoppingCart"
+               asp-route-id="@Model.Id">
+                <i class="bi bi-cart-plus"></i> Dodaj u korpu (@Model.Cena.ToString("N0") RSD)
+            </a>
+        </div>
+    </div>
+</div>
 

@@ -1,8 +1,39 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<section class="container mt-4 mb-5 text-center">
+    <h1 class="fw-bold mb-5" style="color:#4a2c2a;">Dobrodošli u Diskont Pića</h1>
+    <h2 class="fw-bold mb-4">Šta nudimo</h2>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="row justify-content-center g-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://m.media-amazon.com/images/I/61GQaETL9rL.jpg" class="card-img-top p-4 home-icon" alt="Pića">
+                <div class="card-body">
+                    <h5 class="card-title">Pića</h5>
+                    <p class="card-text small text-muted">Osvežavajuća, gazirana, topla i alkoholna pića.</p>
+                    <a asp-controller="Pice" asp-action="Index" class="btn btn-outline-info btn-sm rounded-pill">Pregledaj</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_auto,w_1500,ar_3:2/k%2Farchive%2F82e15235d90e93b6ea79f08debb52cb5ffb2d8e7" class="card-img-top p-4 home-icon" alt="Arome">
+                <div class="card-body">
+                    <h5 class="card-title">Arome</h5>
+                    <p class="card-text small text-muted">Voćne, biljne i začinske arome za pića.</p>
+                    <a asp-controller="Arome" asp-action="Index" class="btn btn-outline-info btn-sm rounded-pill">Pregledaj</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="card-img-top p-4 home-icon" alt="Diskonti">
+                <div class="card-body">
+                    <h5 class="card-title">Diskonti</h5>
+                    <p class="card-text small text-muted">Najpoznatiji diskonti pića u vašoj blizini.</p>
+                    <a asp-controller="Diskonti" asp-action="Index" class="btn btn-outline-info btn-sm rounded-pill">Pregledaj</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

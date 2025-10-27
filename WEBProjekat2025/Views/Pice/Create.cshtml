@@ -101,13 +101,13 @@
 
 @section Scripts {
 	<script>
-		// Kada se stranica učita, odmah postavi preview ako već postoji link
+		// odmah postavi preview ako već postoji link
 		$(document).ready(function () {
 			var output = document.getElementById('SlikaPreview');
 			output.src = $("#SlikaURL").val();
 		});
 
-		// Ažuriraj preview slike dok korisnik unosi URL
+		//preview slike dok korisnik unosi URL
 		$("#SlikaURL").on("input", function () {
 			var output = document.getElementById('SlikaPreview');
 			output.src = $(this).val();

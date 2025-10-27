@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Reflection.Metadata;
 using WEBProjekat2025.Data.Services;
@@ -9,6 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WEBProjekat2025.Controllers
 {
+    [Authorize]
     public class PiceController : Controller
     {
         private readonly IPiceService _service;
@@ -17,7 +19,7 @@ namespace WEBProjekat2025.Controllers
         {
             _service = service;
         }
-
+        [AllowAnonymous]
         // GET: Pice
         public async Task<IActionResult> Index()
         {
@@ -26,22 +28,33 @@ namespace WEBProjekat2025.Controllers
             var svaPica = await _service.GetAllAsync(p => p.Diskont);
             return View(svaPica);
         }
-
+        [AllowAnonymous]
+        
         public async Task<IActionResult> Filter(string searchString)
         {
-
-
             var svaPica = await _service.GetAllAsync(p => p.Diskont);
-            if (!string.IsNullOrEmpty(searchString)) 
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var filteredResult = svaPica.Where(n => n.Ime.Contains(searchString) || n.Opis.Contains(searchString)).ToList();
+                // normalizuj pretragu (radi bez obzira na velika/mala slova)
+                searchString = searchString.ToLower();
+
+                var filteredResult = svaPica.Where(n =>
+                    n.Ime.ToLower().Contains(searchString) ||
+                    n.Opis.ToLower().Contains(searchString) ||
+                    n.Diskont?.Naziv.ToLower().Contains(searchString) == true ||
+                    n.KategorijaPica.ToString().ToLower().Contains(searchString)
+                ).ToList();
+
                 return View("Index", filteredResult);
             }
+
             return View("Index", svaPica);
         }
 
 
         // GET: Pice/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var piceDetail = await _service.GetPiceByIdAsync(id);
@@ -52,14 +65,12 @@ namespace WEBProjekat2025.Controllers
             return View(piceDetail);
         }
 
-        //GET : Pice/Create
-
+        // GET: Pice/Create
         public async Task<IActionResult> Create()
         {
-
             var piceDropdownsData = await _service.GetNewPiceDropDownsValues();
 
-            ViewBag.DiskontId = new SelectList(piceDropdownsData.Diskont, "Id", "Naziv");
+            ViewBag.Diskont = new SelectList(piceDropdownsData.Diskont, "Id", "Naziv");
             ViewBag.Proizvodjac = new SelectList(piceDropdownsData.Proizvodjac, "Id", "Ime");
             ViewBag.Aroma = new SelectList(piceDropdownsData.Aroma, "Id", "Ime");
 
@@ -69,21 +80,21 @@ namespace WEBProjekat2025.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NewPiceVM pice)
         {
-
-            if (ModelState.IsValid) 
+            // ako forma NIJE validna — vrati korisnika nazad i ponovo napuni ViewBag
+            if (!ModelState.IsValid)
             {
                 var piceDropdownsData = await _service.GetNewPiceDropDownsValues();
 
-                ViewBag.DiskontId = new SelectList(piceDropdownsData.Diskont, "Id", "Naziv");
+                ViewBag.Diskont = new SelectList(piceDropdownsData.Diskont, "Id", "Naziv");
                 ViewBag.Proizvodjac = new SelectList(piceDropdownsData.Proizvodjac, "Id", "Ime");
                 ViewBag.Aroma = new SelectList(piceDropdownsData.Aroma, "Id", "Ime");
                 return View(pice);
             }
 
+            // ako je sve ok — ubaci novo piće u bazu
             await _service.AddNewPiceAsync(pice);
             return RedirectToAction(nameof(Index));
         }
-
 
         // GET: Pice/Edit/1
         public async Task<IActionResult> Edit(int id)
@@ -127,7 +138,29 @@ namespace WEBProjekat2025.Controllers
                 return View(pice);
             }
 
-            await _service.UpdateNewlAsync(pice);
+            await _service.UpdateNewPiceAsync(pice);
+            return RedirectToAction(nameof(Index));
+        }
+
+        //GET: Pice/Delete/1
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var arrangementDetails = await _service.GetPiceByIdAsync(id);
+            if (arrangementDetails == null) return View("NotFound");
+
+            return View(arrangementDetails);
+        }
+
+        //POST: Pice/Delete/1
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var arrangementDetails = await _service.GetPiceByIdAsync(id);
+            if (arrangementDetails == null) return View("NotFound");
+
+            await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

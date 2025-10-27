@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using WEBProjekat2025.Data.Cart;
@@ -7,6 +8,7 @@ using WEBProjekat2025.Data.ViewModels;
 
 namespace WEBProjekat2025.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IPiceService _piceService;

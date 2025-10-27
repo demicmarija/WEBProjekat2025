@@ -1,53 +1,60 @@
 ﻿@model List<Order>
 
 @{
-    ViewData["Title"] = "All orders";
+    ViewData["Title"] = "Sve porudžbine";
 }
 
-<div class="row">
-    <div class="col-md-8 offset-2">
-        <h4>List of all your orders</h4>
+<div class="container mt-5">
+    <h2 class="text-center fw-bold text-dark mb-4">📦 Sve porudžbine</h2>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Items</th>
-                    <th>Total</th>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <th>User</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var order in Model)
-                {
-                    <tr>
-                        <td class="align-middle">@order.Id</td>
-                        <td class="align-middle">
-                            <ul style="list-style-type:none; padding-left:0;">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            Trenutno nema porudžbina.
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            @foreach (var order in Model)
+            {
+                <div class="col-md-8 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4 order-card">
+                        <div class="card-header bg-info text-white rounded-top-4 d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">Porudžbina #@order.Id</span>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <span class="small fst-italic">Kupac: @order.User.FullName</span>
+                            }
+                        </div>
+
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
                                 @foreach (var item in order.OrderItems)
                                 {
-                                    <li>
-                                        <div class="alert alert-info" role="alert">
-                                            <span class="badge bg-success">@item.Kolicina</span>
-                                            [@($"{item.Cena:n2} RSD")] - @item.Pice.Ime
+                                    <li class="mb-2">
+                                        <div class="order-item d-flex align-items-center justify-content-between p-2 rounded">
+                                            <div>
+                                                <img src="@item.Pice.SlikaURL" alt="@item.Pice.Ime" class="order-item-img me-2" />
+                                                <strong>@item.Pice.Ime</strong>
+                                                <span class="text-muted small ms-2">@item.Cena.ToString("n2") RSD</span>
+                                            </div>
+                                            <span class="badge bg-success fs-6">@item.Kolicina x</span>
                                         </div>
                                     </li>
                                 }
                             </ul>
-                        </td>
-                        <td class="align-middle">
-                            @order.OrderItems.Select(p => p.Pice.Cena * p.Kolicina).Sum().ToString("c")
-                        </td>
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-                            <td class="align-middle"> @order.User.FullName </td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                        </div>
+
+                        <div class="card-footer bg-light border-0 text-end fw-bold">
+                            Ukupno:
+                            <span class="text-info">
+                                @order.OrderItems.Select(p => p.Pice.Cena * p.Kolicina).Sum().ToString("n2") RSD
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>

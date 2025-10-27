@@ -8,10 +8,7 @@ namespace WEBProjekat2025.Data.Services
     {
         Task<Pice> GetPiceByIdAsync(int id);
         Task<NewPiceDropDownsVM> GetNewPiceDropDownsValues();
-
         Task AddNewPiceAsync(NewPiceVM data);
-        Task UpdatePiceAsync(NewPiceVM data);
-        Task UpdateNewPicelAsync(object festival);
-        Task UpdateNewlAsync(NewPiceVM pice);
+        Task UpdateNewPiceAsync(NewPiceVM data);
     }
 }

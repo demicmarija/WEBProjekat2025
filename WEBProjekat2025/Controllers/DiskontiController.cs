@@ -3,9 +3,11 @@ using WEBProjekat2025.NewFolder2;
 using Microsoft.EntityFrameworkCore;
 using WEBProjekat2025.Data.Services;
 using WEBProjekat2025.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WEBProjekat2025.Controllers
 {
+    [Authorize]
     public class DiskontiController : Controller
     {
         private readonly IDiskontiService _service;
@@ -15,6 +17,8 @@ namespace WEBProjekat2025.Controllers
         {
             _service = service;
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
 
@@ -43,7 +47,7 @@ namespace WEBProjekat2025.Controllers
         }
 
         //Details
-
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int id)
         {
             var diskontDetails = await _service.GetByIdAsync(id);

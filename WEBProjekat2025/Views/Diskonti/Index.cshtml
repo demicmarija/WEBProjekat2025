@@ -1,66 +1,43 @@
 ﻿@model IEnumerable<Diskont>
 
 @{
-	ViewData["Title"] = "Lista Diskonta";
+    ViewData["Title"] = "Lista diskonta";
 }
 
-<div class="row">
+<div class="container mt-4">
+    <h2 class="text-center mb-4 fw-bold text-dark">Naši diskonti</h2>
 
-	<div class="col-mid-8 offset-md-2">
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6">
+                <div class="card diskont-card shadow-lg border-0 rounded-4 h-100 text-center">
+                    <div class="card-header bg-info text-white fw-bold rounded-top-4">
+                        @item.Naziv
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="text-white ms-2" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                            <a class="text-white ms-2" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+                        }
+                    </div>
 
-		<table class=" table">
+                    <img src="@item.LogoURL" alt="@item.Naziv" class="diskont-logo p-3" />
 
-			<thead>
+                    <div class="card-body">
+                        <p><b>Adresa:</b> @item.Adresa</p>
+                    </div>
 
+                    <div class="card-footer bg-light border-0 pb-3">
+                        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">
+                            <i class="bi bi-eye"></i> Detalji
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
-				<tr class="text-center">
-					<th>@Html.DisplayNameFor(model => model.LogoURL)</th>
-					<th>@Html.DisplayNameFor(model => model.Naziv)</th>
-					<th>@Html.DisplayNameFor(model => model.Adresa)</th>
-
-					@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-					{
-						<th>Akcije</th>
-					}
-
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td class="align-middle">
-
-							<img class="rounded-circle" src="@item.LogoURL" alt="@item.Naziv" style="max-width:150px"></img>
-
-						</td>
-						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.Naziv)
-						</td>
-						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.Adresa)
-						</td>
-						@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-						{
-							<td class="align-middle">
-								<a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square">Izmeni</i></a> |
-								<a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye">Detalji</i></a> |
-								<a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash">Izbrisi</i></a> |
-
-							</td>
-						}
-					</tr>
-
-
-
-				}
-			</tbody>
-
-
-		</table>
-
-	</div>
-
+    @await Html.PartialAsync("_CreateItem", "Diskonti")
 </div>
 
 @await Html.PartialAsync("_CreateItem", "Diskonti")

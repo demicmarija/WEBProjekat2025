@@ -1,62 +1,50 @@
 ﻿@model IEnumerable<Pice>
 
 @{
-    ViewData["Title"] = "List of Pica";
+    ViewData["Title"] = "Ponuda pića";
 }
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-                            <p class="card-title">
-                                <h5>
-                                    @item.Ime
-                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                                    {
-                                        <a class="text-white" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
-                                    }
-                                </h5>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="@item.SlikaURL" width="100%" alt="@item.Ime">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body">
-                            <p class="card-text">@item.Opis</p>
-                            <p class="card-text"><b>Diskont: </b>@item.Diskont.Naziv</p>
-                            <p class="card-text"><b>Kategorija: </b>@item.KategorijaPica</p>
-                            <p class="card-text"><b>Proizvedeno: </b>@item.Proizvedeno.ToString("dd MMM yy")</p>
-                            
+<div class="container mt-4">
+    <h2 class="text-center mb-4 fw-bold text-dark">Naša ponuda pića</h2>
 
-                        </div>
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6">
+                <div class="card product-card h-100">
+                    <div class="card-header text-white text-center fw-bold">
+                        @item.Ime
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="text-white ms-2" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                            <a class="text-white ms-2" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+                        }
                     </div>
-                    <div class="col-md-12">
-                        <div class="card-footer ">
-                            <p class="card-text">
-                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Prikazi detalje
-                                </a>
-                                <a class="btn btn-success text-white"
-                                   asp-controller="Orders"
-                                   asp-action="AddItemToShoppingCart"
-                                   asp-route-id="@item.Id">
-                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Cena.ToString("c"))
-                                </a>
 
+                    <img src="@item.SlikaURL" class="card-img-top product-image" alt="@item.Ime" />
 
-                            </p>
-                        </div>
+                    <div class="card-body text-center">
+                        <p class="text-muted">@item.Opis</p>
+                        <p><b>Diskont:</b> @item.Diskont.Naziv</p>
+                        <p><b>Kategorija:</b> @item.KategorijaPica</p>
+                        <p><b>Proizvedeno:</b> @item.Proizvedeno.ToString("dd MMM yy")</p>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <a class="btn btn-outline-primary me-2" asp-action="Details" asp-route-id="@item.Id">
+                            <i class="bi bi-eye-fill"></i> Detalji
+                        </a>
+                        <a class="btn btn-success text-white"
+                           asp-controller="Orders"
+                           asp-action="AddItemToShoppingCart"
+                           asp-route-id="@item.Id">
+                            <i class="bi bi-cart-plus"></i> Dodaj (Cena: @item.Cena.ToString("N0") RSD)
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 @await Html.PartialAsync("_Createitem", "Pice")

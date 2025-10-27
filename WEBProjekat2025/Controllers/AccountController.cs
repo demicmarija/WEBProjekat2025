@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using WEBProjekat2025.Data.Static;
 using WEBProjekat2025.Data.ViewModels;
@@ -19,6 +20,11 @@ namespace WEBProjekat2025.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+        }
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
         }
 
         public IActionResult Login()
@@ -89,6 +95,8 @@ namespace WEBProjekat2025.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Clear(); // očisti session korpu
+
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Pice");
         }

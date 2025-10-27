@@ -1,53 +1,33 @@
 ﻿@model Proizvodjac
 
 @{
-    ViewData["Title"] = "Detalji";
+    ViewData["Title"] = "Detalji proizvođača";
 }
 
-<div class="row text">
-    <div class="col-md-8 offset-2">
-        <p>
-            <h1>Detalji o @Model.Ime</h1>
-        </p>
-        <div class="row">
-            <div class="col-md-8 offset-2">
-                <div class=" form-group text-center">
-                    <img class="border-info rounded-circle style="max-width 150px" id="SlikaPreview" />
-                </div>
-                <div class=" form-group">
-                    <Label asp-for="LogoURL" class=" control-label"></Label>
-                    <input asp-for="LogoURL" class=" form-control" readonly />
-                    <span asp-validation-for="LogoURL" class="text-danger"></span>
+<div class="container mt-5">
+    <div class="card proizvodjac-details shadow-lg border-0 rounded-4">
+        <div class="card-header text-center text-white bg-info rounded-top-4">
+            <h3 class="fw-bold mb-0">@Model.Ime</h3>
+        </div>
 
-                </div>
-                <div class=" form-group">
-                    <Label asp-for="Ime" class=" control-label"></Label>
-                    <input asp-for="Ime" class=" form-control" readonly />
-                    <span asp-validation-for="Ime" class="text-danger"></span>
+        <div class="card-body text-center">
+            <img src="@Model.LogoURL" alt="@Model.Ime" class="proizvodjac-details-logo mb-3" />
+            <p class="lead text-muted">@Model.Opis</p>
+        </div>
 
-                </div>
-                <div class=" form-group">
-                    <Label asp-for="Opis" class=" control-label"></Label>
-                    <input asp-for="Opis" class=" form-control" readonly />
-                    <span asp-validation-for="Opis" class="text-danger"></span>
-
-                </div>
-
-                <div class="form-group">
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <a class=" btn btn-outline-success float-right" asp-action="Edit" asp-route-id="@Model.Id">Izmeni</a>
-                    }
-                    <a class=" btn btn-outline-secondary " asp-action="Index">Prikazi sve</a>
-                </div>
-
-
-            </div>
+        <div class="card-footer bg-light text-center border-0 pb-3">
+            <a class="btn btn-outline-secondary me-2" asp-action="Index">
+                <i class="bi bi-arrow-left"></i> Nazad na listu
+            </a>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success text-white" asp-action="Edit" asp-route-id="@Model.Id">
+                    <i class="bi bi-pencil"></i> Izmeni
+                </a>
+            }
         </div>
     </div>
 </div>
-
-
 
 
 @section Scripts {

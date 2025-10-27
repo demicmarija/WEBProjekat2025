@@ -3,6 +3,11 @@ using WEBProjekat2025.Data.Base;
 using WEBProjekat2025.Data.ViewModels;
 using WEBProjekat2025.Models;
 using WEBProjekat2025.NewFolder2;
+using WEBProjekat2025.Data.Services;
+
+
+
+
 
 namespace WEBProjekat2025.Data.Services
 {
@@ -43,7 +48,7 @@ namespace WEBProjekat2025.Data.Services
 
         public async Task AddNewPiceAsync(NewPiceVM data)
         {
-            
+
             var newPice = new Pice()
             {
                 Ime = data.Ime,
@@ -60,7 +65,7 @@ namespace WEBProjekat2025.Data.Services
             await _context.SaveChangesAsync();
 
             //Add Pice Arome
-           
+
             foreach (var aromaId in data.AromeIds)
             {
                 var newAromaPice = new Arome_Pice()
@@ -75,25 +80,17 @@ namespace WEBProjekat2025.Data.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task AddNewPice(NewPiceVM data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdatePiceAsync(NewPiceVM data)
-        {
-            throw new NotImplementedException();
-        }
+        
 
 
         public async Task UpdateNewPiceAsync(NewPiceVM data)
         {
-           
+
             var dbPice = await _context.Pice.FirstOrDefaultAsync(n => n.Id == data.Id);
 
             if (dbPice != null)
             {
-               
+
                 dbPice.Ime = data.Ime;
                 dbPice.Opis = data.Opis;
                 dbPice.Cena = data.Cena;
@@ -126,15 +123,6 @@ namespace WEBProjekat2025.Data.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateNewPicelAsync(object festival)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateNewlAsync(NewPiceVM pice)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

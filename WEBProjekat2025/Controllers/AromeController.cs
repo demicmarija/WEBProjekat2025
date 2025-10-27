@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WEBProjekat2025.Data.Services;
 using WEBProjekat2025.Models;
@@ -6,6 +7,7 @@ using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025.Controllers
 {
+    [Authorize]
     public class AromeController : Controller
     {
         private readonly IAromeService _service;
@@ -15,6 +17,7 @@ namespace WEBProjekat2025.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var sveArome = await _service.GetAllAsync();
@@ -41,7 +44,7 @@ namespace WEBProjekat2025.Controllers
         }
 
         //Details
-
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int id)
         {
             var aromaDetails = await _service.GetByIdAsync(id);

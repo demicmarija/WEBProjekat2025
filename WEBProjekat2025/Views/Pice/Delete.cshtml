@@ -1,0 +1,64 @@
+﻿@model Pice
+
+@{
+    ViewData["Title"] = "Obrisi pice";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Delete confirmation for @Model.Ime</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <div class="form-group text-center">
+                    <img class="border-info rounded" style="max-width: 200px" id="ArrangementImagePreview" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SlikaURL" class="control-label"></label>
+                    <input asp-for="SlikaURL" class="form-control" readonly />
+                    <span asp-validation-for="SlikaURL" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ime" class="control-label"></label>
+                    <input asp-for="Ime" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Opis" class="control-label"></label>
+                    <input asp-for="Opis" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cena" class="control-label"></label>
+                    <input asp-for="Cena" class="form-control" readonly />
+                </div>
+
+                <hr />
+
+                <div class="form-group text-center mt-3">
+                    <form asp-action="Delete" style="display: inline-block; margin-right: 10px;">
+                        <input type="hidden" asp-for="Id" />
+                        <button type="submit" class="btn btn-danger">
+                            Potvrdi brisanje
+                        </button>
+                    </form>
+
+                    <a class="btn btn-outline-secondary" asp-action="Index">
+                        Otkaži
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('PiceSlikaPreview');
+            output.src = $("#SlikaURL").val();
+        })
+    </script>
+}

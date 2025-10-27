@@ -19,7 +19,7 @@ namespace WEBProjekat2025
 {
     public class Startup
     {
-        // Konstruktor za čitanje konfiguracije (npr. connection string iz appsettings.json)
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,10 +27,10 @@ namespace WEBProjekat2025
 
         public IConfiguration Configuration { get;  }
 
-        // 1️⃣ Ovde se registruju svi servisi (uključujući DbContext i AppDbInitializer)
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            // Registracija DbContext-a (prilagodi ime connection stringa ako nije isto)
+            // Registracija DbContext-a 
             services.AddDbContext<appDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
             // Registracija AppDbInitializer klase
@@ -48,10 +48,10 @@ namespace WEBProjekat2025
             services.AddControllersWithViews();
             services.AddScoped<IAromeService, AromeService>();
 
-            // Dodavanje MVC servisa (za kontrolere i view-ove)
+            
             services.AddControllersWithViews();
 
-            //Authentication and authorization
+            
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<appDbContext>();
             services.AddMemoryCache();
             services.AddSession();
@@ -63,7 +63,7 @@ namespace WEBProjekat2025
             services.AddControllersWithViews();
         }
 
-        // 2️⃣ Ovde se konfiguriše HTTP pipeline i pokreće inicijalizacija baze
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbInitializer appDbInitializer)
         {
             if (env.IsDevelopment())
@@ -84,7 +84,7 @@ namespace WEBProjekat2025
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Ruta za kontrolere (default: Home/Index)
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -92,7 +92,7 @@ namespace WEBProjekat2025
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // 🔹 Pokretanje metode za inicijalizaciju baze
+            
             appDbInitializer.Seed(app);
             AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
