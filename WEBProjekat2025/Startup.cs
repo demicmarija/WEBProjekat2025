@@ -81,7 +81,7 @@ namespace WEBProjekat2025
 
             app.UseRouting();
             app.UseSession();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Ruta za kontrolere (default: Home/Index)
