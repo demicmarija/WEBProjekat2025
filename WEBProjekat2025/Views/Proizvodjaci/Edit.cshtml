@@ -1,71 +1,74 @@
 ﻿@model Proizvodjac
 
 @{
-    ViewData["Title"] = "Izmeni proizvodjaca";
+    ViewData["Title"] = "Izmeni proizvodjača";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
-        <p>
-            <h1>Izmeni aromu </h1>
-        </p>
+        <p><h1>Izmeni proizvodjača</h1></p>
+
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action ="Edit" asp-route-id="@Model.Id">
-                    <input type ="hidden" asp-for="Id" />
+                <form asp-action="Edit" asp-route-id="@Model.Id">
+                    <input type="hidden" asp-for="Id" />
+
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class=" form-group text-center">
-                        <img id="LogoPreview" class="border-info rounded-circle" style="max-width:150px;" />
-                    </div>
-                    <div class=" form-group">
-                        <Label asp-for="LogoURL" class=" control-label"></Label>
-                        <input asp-for="LogoURL" class=" form-control" />
-                        <span asp-validation-for="LogoURL" class="text-danger"></span>
 
-                    </div>
-                    <div class=" form-group">
-                        <Label asp-for="Ime" class=" control-label"></Label>
-                        <input asp-for="Ime" class=" form-control" />
-                        <span asp-validation-for="Ime" class="text-danger"></span>
-
-                    </div>
-                    <div class=" form-group">
-                        <Label asp-for="Opis" class=" control-label"></Label>
-                        <input asp-for="Opis" class=" form-control" />
-                        <span asp-validation-for="Opis" class="text-danger"></span>
-
+                    <!-- PREVIEW slike -->
+                    <div class="form-group text-center my-3">
+                        <img id="LogoPreview"
+                             src="@Model.LogoURL"
+                             class="border-info rounded-circle"
+                             style="max-width:150px; border:1px solid #ccc;" />
                     </div>
 
+                    <!-- URL logotipa -->
                     <div class="form-group">
-                        <input type="submit" value="Izmeni" class="btn btn-outline-success float-right" />
-                        <a class=" btn btn-outline-secondary " asp-action="Index">Prikazi sve</a>
+                        <label asp-for="LogoURL" class="control-label"></label>
+                        <input asp-for="LogoURL" class="form-control" id="LogoURL" />
+                        <span asp-validation-for="LogoURL" class="text-danger"></span>
+                    </div>
+
+                    <!-- Ime -->
+                    <div class="form-group">
+                        <label asp-for="Ime" class="control-label"></label>
+                        <input asp-for="Ime" class="form-control" />
+                        <span asp-validation-for="Ime" class="text-danger"></span>
+                    </div>
+
+                    <!-- Opis -->
+                    <div class="form-group">
+                        <label asp-for="Opis" class="control-label"></label>
+                        <input asp-for="Opis" class="form-control" />
+                        <span asp-validation-for="Opis" class="text-danger"></span>
+                    </div>
+
+                    <!-- Dugmad -->
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-outline-success float-right">Izmeni</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index">Prikaži sve</a>
                     </div>
                 </form>
-                
             </div>
         </div>
-    </div>
     </div>
+</div>
 
-   
-
-
-@section Scripts{
-
+@section Scripts {
     <script>
+        // Postavi preview slike kada se stranica učita
+        $(document).ready(function () {
+            var output = document.getElementById('LogoPreview');
+            output.src = $("#LogoURL").val();
+        });
 
-        $(document).ready(function(){
-        var output = document.getElementById('LogoPreview');
-        output.src = $("#LogoURL").val();
-        })
-
-        $("#LogoURL").on("change", function(){
-
+        // Ažuriraj preview slike dok korisnik menja URL
+        $("#LogoURL").on("input", function () {
             var output = document.getElementById('LogoPreview');
             output.src = $(this).val();
-        })
+        });
     </script>
 }
-
   
 

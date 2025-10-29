@@ -6,62 +6,64 @@
 
 <div class="row text">
     <div class="col-md-8 offset-2">
-        <p>
-            <h1>Dodaj novu aromu </h1>
-        </p>
+        <p><h1>Dodaj novi diskont</h1></p>
+
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action ="Create">
+                <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class=" form-group text-center">
-                        <img id="LogoPreview" class="border-info rounded-circle" style="max-width: 150px" />
+
+                    <!-- PREVIEW slike -->
+                    <div class="form-group text-center my-3">
+                        <img id="LogoPreview" src=""
+                             class="border-info rounded-circle"
+                             style="max-width:150px; border:1px solid #ccc;" />
                     </div>
-                    <div class=" form-group">
-                        <Label asp-for="LogoURL" class=" control-label"></Label>
-                        <input asp-for="LogoURL" class=" form-control" />
+
+                    <!-- URL logotipa -->
+                    <div class="form-group">
+                        <label asp-for="LogoURL" class="control-label"></label>
+                        <input asp-for="LogoURL" class="form-control" id="LogoURL" />
                         <span asp-validation-for="LogoURL" class="text-danger"></span>
-
                     </div>
-                    <div class=" form-group">
-                        <Label asp-for="Naziv" class=" control-label"></Label>
-                        <input asp-for="Naziv" class=" form-control" />
+
+                    <!-- Naziv -->
+                    <div class="form-group">
+                        <label asp-for="Naziv" class="control-label"></label>
+                        <input asp-for="Naziv" class="form-control" />
                         <span asp-validation-for="Naziv" class="text-danger"></span>
-
                     </div>
-                    <div class=" form-group">
-                        <Label asp-for="Adresa" class=" control-label"></Label>
-                        <input asp-for="Adresa" class=" form-control" />
+
+                    <!-- Adresa -->
+                    <div class="form-group">
+                        <label asp-for="Adresa" class="control-label"></label>
+                        <input asp-for="Adresa" class="form-control" />
                         <span asp-validation-for="Adresa" class="text-danger"></span>
-
                     </div>
 
-                    
+                    <!-- Dugmad -->
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-outline-success float-right">Dodaj</button>
+                        <a class="btn btn-outline-secondary" asp-action="Index">Prikaži sve</a>
+                    </div>
                 </form>
-                
             </div>
         </div>
-    </div>
     </div>
+</div>
 
-   
-
-
-@section Scripts{
-
+@section Scripts {
     <script>
+        // prikaz slike odmah po učitavanju
+        $(document).ready(function () {
+            var output = document.getElementById('LogoPreview');
+            output.src = $("#LogoURL").val();
+        });
 
-        $(document).ready(function(){
-        var output = document.getElementById('LogoPreview');
-        output.src = $("#LogoURL").val();
-        })
-
-        $("#LogoURL").on("change", function(){
-
+        // menjaj preview dok korisnik kuca URL
+        $("#LogoURL").on("input", function () {
             var output = document.getElementById('LogoPreview');
             output.src = $(this).val();
-        })
+        });
     </script>
 }
-
-  
-

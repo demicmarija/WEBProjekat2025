@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using WEBProjekat2025.Data.Services;
+using WEBProjekat2025.Data.Static;
 using WEBProjekat2025.Models;
 using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     public class ProizvodjaciController : Controller
     {
        
@@ -76,8 +77,7 @@ namespace WEBProjekat2025.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await _service.UpdateAsync(id,proizvodjac);
-            return RedirectToAction(nameof(Index));
+            return View(proizvodjac);
         }
         //Get: producers/delete/1
 
@@ -88,7 +88,7 @@ namespace WEBProjekat2025.Controllers
             if (proizvodjacDetails == null) return View("NotFound");
             return View(proizvodjacDetails);
 
-            return View();
+           
         }
 
         [HttpPost, ActionName("Delete")]

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Reflection.Metadata;
 using WEBProjekat2025.Data.Services;
+using WEBProjekat2025.Data.Static;
 using WEBProjekat2025.Data.ViewModels;
 using WEBProjekat2025.Models;
 using static System.Collections.Specialized.BitVector32;
@@ -10,7 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WEBProjekat2025.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     public class PiceController : Controller
     {
         private readonly IPiceService _service;
@@ -19,7 +20,10 @@ namespace WEBProjekat2025.Controllers
         {
             _service = service;
         }
+
+
         [AllowAnonymous]
+
         // GET: Pice
         public async Task<IActionResult> Index()
         {
@@ -36,7 +40,7 @@ namespace WEBProjekat2025.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                // normalizuj pretragu (radi bez obzira na velika/mala slova)
+                // pretraga (radi bez obzira na velika/mala slova)
                 searchString = searchString.ToLower();
 
                 var filteredResult = svaPica.Where(n =>
@@ -54,6 +58,7 @@ namespace WEBProjekat2025.Controllers
 
 
         // GET: Pice/Details/5
+
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
@@ -80,7 +85,7 @@ namespace WEBProjekat2025.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NewPiceVM pice)
         {
-            // ako forma NIJE validna — vrati korisnika nazad i ponovo napuni ViewBag
+            
             if (!ModelState.IsValid)
             {
                 var piceDropdownsData = await _service.GetNewPiceDropDownsValues();
@@ -91,12 +96,15 @@ namespace WEBProjekat2025.Controllers
                 return View(pice);
             }
 
-            // ako je sve ok — ubaci novo piće u bazu
+            
             await _service.AddNewPiceAsync(pice);
             return RedirectToAction(nameof(Index));
         }
 
+
+
         // GET: Pice/Edit/1
+
         public async Task<IActionResult> Edit(int id)
         {
             var piceDetails = await _service.GetPiceByIdAsync(id);
@@ -154,7 +162,7 @@ namespace WEBProjekat2025.Controllers
 
         //POST: Pice/Delete/1
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var arrangementDetails = await _service.GetPiceByIdAsync(id);

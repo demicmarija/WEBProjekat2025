@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WEBProjekat2025.NewFolder2;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WEBProjekat2025.Data.Services;
+using WEBProjekat2025.Data.Static;
 using WEBProjekat2025.Models;
-using Microsoft.AspNetCore.Authorization;
+using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     public class DiskontiController : Controller
     {
         private readonly IDiskontiService _service;
@@ -90,6 +91,7 @@ namespace WEBProjekat2025.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+
 
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

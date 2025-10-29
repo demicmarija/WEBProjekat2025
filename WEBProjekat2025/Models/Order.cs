@@ -6,7 +6,6 @@ namespace WEBProjekat2025.Models
     public class Order
     {
         
-        
         [Key]
         public int Id { get; set; }
 

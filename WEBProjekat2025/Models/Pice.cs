@@ -11,15 +11,24 @@ namespace WEBProjekat2025.Models
         [Display(Name = "ID")]
         public int Id { get; set; }
 
+
         [Display(Name = "Ime")]
         public string Ime { get; set; }
+
+
         [Display(Name = "Opis")]
         public string Opis { get; set; }
+
+
         [Display(Name = "Cena")]
         public double Cena { get; set; }
 
+
+
         [Display(Name = "Slika")]
         public string SlikaURL { get; set; }
+
+
         
        public DateTime Proizvedeno { get; set; }
         public KategorijaPica KategorijaPica { get; set; }

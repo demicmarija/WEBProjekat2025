@@ -8,19 +8,27 @@ namespace WEBProjekat2025.Models
         [Key]
         [Display(Name = "ID")]
         public int Id { get; set; }
+
+
         [Display(Name = "Logo")]
         [Required(ErrorMessage = "Logo se zahteva")]
         public string LogoURL { get; set; }
+
+
 
         [Display(Name = "Naziv")]
         [Required(ErrorMessage = "Naziv se zahteva")]
         public string  Naziv { get; set; }
 
+
+
         [Display(Name = "Adresa")]
         [Required(ErrorMessage = "Adresa se zahteva")]
         public string Adresa { get; set; }
 
-        //veze
+
+
+        
         public List<Pice> Pica { get; set; }
 
     }

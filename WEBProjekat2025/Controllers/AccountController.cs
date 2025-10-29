@@ -65,7 +65,7 @@ namespace WEBProjekat2025.Controllers
         }
 
 
-    [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             if (!ModelState.IsValid) return View(registerVM);
@@ -81,21 +81,30 @@ namespace WEBProjekat2025.Controllers
             {
                 FullName = registerVM.FullName,
                 Email = registerVM.EmailAddress,
-                UserName = registerVM.EmailAddress,
-                EmailConfirmed = true
+                UserName = registerVM.EmailAddress
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
 
+         
             if (newUserResponse.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+                return View("RegisterCompleted");
+            }
+            else
+            {
+               
+                string errors = string.Join(", ", newUserResponse.Errors.Select(e => e.Description));
+                TempData["Error"] = "Registration failed: " + errors;
+                return View(registerVM);
+            }
 
-            return View("RegisterCompleted");
         }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Clear(); // očisti session korpu
+            HttpContext.Session.Clear(); // očisti session 
 
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Pice");

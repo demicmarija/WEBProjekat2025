@@ -17,9 +17,12 @@ namespace WEBProjekat2025.Data
                     var context = serviceScope.ServiceProvider.GetService<appDbContext>();
                     context.Database.EnsureCreated();
 
-                    // 🔹 DISKONT
+
+
+                    //  DISKONT
+
                     if (!context.Diskont.Any())
-                {
+                    {
                     context.Diskont.AddRange(new List<Diskont>()
                     {
                         new Diskont()
@@ -68,7 +71,7 @@ namespace WEBProjekat2025.Data
                     context.SaveChanges();
                 }
 
-                // 🔹 AROMA
+                //  AROMA
                 if (!context.Aroma.Any())
                 {
                     context.Aroma.AddRange(new List<Aroma>()
@@ -137,7 +140,7 @@ namespace WEBProjekat2025.Data
                     context.SaveChanges();
                 }
 
-                // 🔹 PROIZVODJAC
+                //  PROIZVODJAC
                 if (!context.Proizvodjac.Any())
                 {
                     context.Proizvodjac.AddRange(new List<Proizvodjac>()
@@ -188,7 +191,7 @@ namespace WEBProjekat2025.Data
                     context.SaveChanges();
                 }
 
-                // 🔹 PICE
+                //  PICE
                 if (!context.Pice.Any())
                 {
                     context.Pice.AddRange(new List<Pice>()
@@ -274,7 +277,7 @@ namespace WEBProjekat2025.Data
                     context.SaveChanges();
                 }
 
-                // 🔹 AROME_PICE
+                //  AROME_PICE
                 if (!context.Arome_Pice.Any())
                 {
                     context.Arome_Pice.AddRange(new List<Arome_Pice>()
@@ -298,7 +301,7 @@ namespace WEBProjekat2025.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                // Roles
+                // Uloge
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
@@ -307,7 +310,7 @@ namespace WEBProjekat2025.Data
                 if (!await roleManager.RoleExistsAsync(UserRoles.User))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                // Users
+                // Korisnici
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 string adminUserEmail = "admin@WEBProjekat2025.com";
 

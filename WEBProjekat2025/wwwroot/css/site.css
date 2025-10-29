@@ -95,6 +95,10 @@ body {
     transform: scale(1.03);
 }
 
+input.btn {
+    border-radius: .375rem !important;
+}
+
 /* ===================================
    STRANICA: PIÆA (PRODUCTS)
 =================================== */

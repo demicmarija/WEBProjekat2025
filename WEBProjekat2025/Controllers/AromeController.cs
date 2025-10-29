@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WEBProjekat2025.Data.Services;
+using WEBProjekat2025.Data.Static;
 using WEBProjekat2025.Models;
 using WEBProjekat2025.NewFolder2;
 
 namespace WEBProjekat2025.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRoles.Admin)]
     public class AromeController : Controller
     {
         private readonly IAromeService _service;

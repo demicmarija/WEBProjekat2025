@@ -33,7 +33,8 @@ namespace WEBProjekat2025
             // Registracija DbContext-a 
             services.AddDbContext<appDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
-            // Registracija AppDbInitializer klase
+            // Registracija 
+
             services.AddScoped<AppDbInitializer>();
             services.AddScoped<IProizvodjaciService,ProizvodjaciService>();
             services.AddScoped<IDiskontiService, DiskontiService> ();
@@ -55,11 +56,15 @@ namespace WEBProjekat2025
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<appDbContext>();
             services.AddMemoryCache();
             services.AddSession();
+            
+            //Kolacici za autentifikaciju 
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
 
+
+            //MVC
             services.AddControllersWithViews();
         }
 

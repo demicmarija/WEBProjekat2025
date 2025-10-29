@@ -21,8 +21,8 @@ namespace WEBProjekat2025.Models
         [Required(ErrorMessage = "Opis se zahteva")]
         public string Opis { get; set; }
 
-        //veze
+        
         public List<Pice> Pica { get; set; }
-        //public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        
     }
 }

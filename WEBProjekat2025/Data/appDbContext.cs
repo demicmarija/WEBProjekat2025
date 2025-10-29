@@ -15,6 +15,8 @@ namespace WEBProjekat2025.NewFolder2
             
         }
 
+        //N:N tabela specifikacija
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Arome_Pice>().HasKey(ap => new
@@ -30,13 +32,15 @@ namespace WEBProjekat2025.NewFolder2
             base.OnModelCreating(modelBuilder);
         }
 
+        //Tabele za bazu inicijalne
+
         public DbSet<Arome_Pice> Arome_Pice { get; set; }
         public DbSet<Aroma> Aroma { get; set; }
         public DbSet<Pice> Pice { get; set; }
         public DbSet<Diskont> Diskont { get; set; }
         public DbSet<Proizvodjac> Proizvodjac { get; set; }
 
-        //orders relate tables
+        //Tabele za porudzbine
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }

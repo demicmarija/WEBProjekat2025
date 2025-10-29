@@ -39,14 +39,11 @@ namespace WEBProjekat2025.Data.Cart
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
 
-        public void AddItemtoCart(Pice pice)
-        {
-            var shoppingCartItems = _context.ShoppingCartItems.FirstOrDefault(n => n.Pice.Id == pice.Id && n.ShoppingCartId == ShoppingCartId);
-        } 
-
+      
             public void AddItemToCart(Pice pice)
             {
             var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Pice.Id == pice.Id && n.ShoppingCartId == ShoppingCartId);
+            
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem()
@@ -63,11 +60,12 @@ namespace WEBProjekat2025.Data.Cart
             }
             _context.SaveChanges();
              
-        }
+             }
 
         public void RemoveItemFromCart(Pice pice)
         {
             var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Pice.Id == pice.Id && n.ShoppingCartId == ShoppingCartId);
+          
             if (shoppingCartItem != null)
             {
                 if (shoppingCartItem.Kolicina > 1)
